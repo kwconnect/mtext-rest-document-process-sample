@@ -21,15 +21,6 @@ The marked request are sending some xml file content in a mimepart. Check that t
 
 ## Requests in detail
 
-The collection demonstrates 
-
-* how to query documents
-* how to delete documents
-* how to query available templates
-* how to create a document with a choosen template
-* how to query information about this document
-* 
-
 ### Check version of M/TEXT and M/OMS server (GET)
 
 The requests "Returns M/TEXT version information" and "Returns M/OMS version information" query the server version.
