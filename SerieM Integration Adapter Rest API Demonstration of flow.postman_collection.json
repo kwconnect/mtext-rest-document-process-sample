@@ -1,0 +1,2187 @@
+{
+	"info": {
+		"_postman_id": "38774c12-7c55-450a-9016-d0b6c2d5531f",
+		"name": "SerieM Integration Adapter Rest API Demonstration of flow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Returns M/TEXT version information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.info(\"Expected version is \" + pm.variables.get(\"version\"));\r",
+							"var jsonData = pm.response.json();\r",
+							"console.info(\"Got version \" + jsonData.implementationVersion);\r",
+							"pm.test(\"Check M/TEXT version \" + jsonData.implementationVersion, function() {\r",
+							"    pm.expect(jsonData.implementationVersion).is.not.null;\r",
+							"});\r",
+							"pm.test(\"Check expected version\", function() {\r",
+							"    pm.expect(jsonData.implementationVersion).to.contains(pm.variables.get(\"version\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/version-info",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"version-info"
+					]
+				},
+				"description": "Returns version information of the M/TEXT Rest API.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Returns M/OMS version information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"console.info(\"Expected version is \" + pm.variables.get(\"version\"));\r",
+							"var jsonData = pm.response.json();\r",
+							"console.info(\"Got version \" + jsonData.implementationVersion);\r",
+							"pm.test(\"Check M/OMS version \" + jsonData.implementationVersion, function() {\r",
+							"    pm.expect(jsonData.implementationVersion).is.not.null;\r",
+							"});\r",
+							"pm.test(\"Check expected version\", function() {\r",
+							"    pm.expect(jsonData.implementationVersion).to.contains(pm.variables.get(\"version\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrlMOMS}}/version-info",
+					"host": [
+						"{{baseUrlMOMS}}"
+					],
+					"path": [
+						"version-info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List documents",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();\r",
+							"pm.variables.set(\"documentsToRemove\", jsonData);\r",
+							"if (jsonData.length > 1) pm.test(\"Still \" +  jsonData.length + \" documents to remove...\", function() {});\r",
+							"else if (jsonData.length == 1) pm.test(\"One document to remove...\", function() {});\r",
+							"else pm.test(\"No document to remove...\", function() {});\r",
+							"if (jsonData.length > 0) {\r",
+							"    for(var i = 0; i < jsonData.length; i++) {\r",
+							"        console.log(jsonData[i].qualifiedDocumentName);\r",
+							"    }\r",
+							"}\r",
+							"else {\r",
+							"    postman.setNextRequest(\"Returns user information\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/virtual-folder/documents?filter=Name like \"{{documentNamePrefix}}*\"&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"virtual-folder",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "beginIndex",
+							"value": "-1",
+							"disabled": true
+						},
+						{
+							"key": "endIndex",
+							"value": "-1",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "Name like \"{{documentNamePrefix}}*\""
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete document",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let documentsToRemove = pm.variables.get(\"documentsToRemove\");\r",
+							"if (documentsToRemove != null && documentsToRemove.length > 0) {\r",
+							"    console.log(documentsToRemove[0].qualifiedDocumentName);\r",
+							"    pm.variables.set(\"docname\", documentsToRemove[0].qualifiedDocumentName);\r",
+							"    postman.setNextRequest(\"List documents\");\r",
+							"}\r",
+							"else {\r",
+							"    postman.setNextRequest(\"Returns user information\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var docname = pm.variables.get(\"docname\");\r",
+							"pm.test(\"Document \" +  docname + \" removed...\", function() {});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/delete?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"delete"
+					],
+					"query": [
+						{
+							"key": "mtext.deleteTextDocumentConfiguration.ignoreLock",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Returns user information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Check userdata for login user found\", function() {\r",
+							"    pm.expect(jsonData.loginId).to.equal(pm.variables.get(\"username\"));\r",
+							"    pm.variables.set(\"guid\", jsonData.guid);\r",
+							"    pm.collectionVariables.set(\"guid\", jsonData.guid);\r",
+							"    console.info(\"User \" + pm.variables.get(\"guid\") + \" picked\");\r",
+							"});\r",
+							"pm.test(\"User \" + jsonData.presentationName + \" with guid \" + pm.variables.get(\"guid\") + \" picked...\", function() {\r",
+							"});\r",
+							"pm.test(\"Check role membership\", function() {\r",
+							"    pm.expect(jsonData.roles.length).to.gt(0, \"Should have role assignment\");\r",
+							"    var rolename = null;\r",
+							"    for(var i = 0; i < jsonData.roles.length && rolename == null; i++) {\r",
+							"        if (jsonData.roles[i].fullName.startsWith(\"MText.\")) {\r",
+							"            rolename = jsonData.roles[i].fullName;\r",
+							"        }\r",
+							"    }\r",
+							"    pm.expect(rolename).to.not.null;\r",
+							"    if (rolename != null) {\r",
+							"        pm.collectionVariables.set(\"rolename\", rolename);\r",
+							"        pm.variables.set(\"rolename\", rolename);\r",
+							"    } \r",
+							"});\r",
+							"pm.test(\"Role \" + pm.variables.get(\"rolename\") + \" picked...\", function() {\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user-info?login-id={{username}}&user={{username}}&passwordplain={{password}}&obtain-role-users=true",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user-info"
+					],
+					"query": [
+						{
+							"key": "login-id",
+							"value": "{{username}}",
+							"description": "If user information should be returned for this user instead of the current user.\n"
+						},
+						{
+							"key": "user",
+							"value": "{{username}}",
+							"description": "the login id to be used if single sign on or a technical user is not used.\n"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"description": "the encrypted password if single sign on or a technical user is not used. As an alternative to this parameter the password can be passed unencrypted via the parameter passwordplain.\n",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}",
+							"description": "the password if single sign on or a technical user is not used. As a preferred alternative to this parameter the password can be passed encrypted via the parameter password.\n"
+						},
+						{
+							"key": "obtain-role-users",
+							"value": "true",
+							"description": "Each role stores a list of users assigned to it. By the default the list of login ids of users assigned to a role is returned. Setting this option to false omits the list of login ids from roles, which could improve performance when there are many users assigned to a role.\n"
+						}
+					]
+				},
+				"description": "Returns user information."
+			},
+			"response": []
+		},
+		{
+			"name": "Query template",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Check templates found\", function() {\r",
+							"    pm.expect(jsonData.length).to.gt(0);\r",
+							"    pm.variables.set(\"template\", jsonData[0].fullName);\r",
+							"    pm.collectionVariables.set(\"template\", jsonData[0].fullName);\r",
+							"    console.info(\"Template \" + pm.variables.get(\"template\") + \" picked\");\r",
+							"});\r",
+							"pm.test(\"Template \" + pm.variables.get(\"template\") + \" picked...\", function() {\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.variables.set(\"project\", \"SimpleSamples\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/templates?user={{username}}&passwordplain={{password}}&filter=Name like \"{{templateSearchName}}*\" AND DocumentType \"TONIC\"",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"templates"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						},
+						{
+							"key": "project-name",
+							"value": "bsp_Anschreiben",
+							"description": "Restrict to templates from one project",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "Name like \"{{templateSearchName}}*\" AND DocumentType \"TONIC\""
+						},
+						{
+							"key": "filter",
+							"value": "METADATA.SPARTE = \"Kfz-Versicherung\"",
+							"description": "Try different filter",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Returns template metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/template/:template-name/info?include-empty-metadata-values=false&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"template",
+						":template-name",
+						"info"
+					],
+					"query": [
+						{
+							"key": "include-empty-metadata-values",
+							"value": "false"
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "template-name",
+							"value": "{{template}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Returns list of datasources",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var template = pm.variables.get(\"template\");\r",
+							"if (template == \"NOTEMPLATE\") pm.variables.set(\"template\", \"\\\\library\\\\bsp_Anschreiben\\\\Vorlagen\\\\Willkommen.template\");"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Template should take only one datasource\", function() {\r",
+							"    pm.expect(jsonData.length).to.equal(1);\r",
+							"});\r",
+							"pm.variables.set(\"datasource\", jsonData[0].name);\r",
+							"pm.collectionVariables.set(\"datasource\", jsonData[0].name);\r",
+							"pm.test(\"Save datasource name \" + pm.variables.get(\"datasource\"), function() {\r",
+							"   \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/template/:template-name/data-sources?include-empty-metadata-values=false&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"template",
+						":template-name",
+						"data-sources"
+					],
+					"query": [
+						{
+							"key": "include-empty-metadata-values",
+							"value": "false"
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "template-name",
+							"value": "{{template}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Creates a M/TEXT document using document data binding",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Document created: check response state\", function() {\r",
+							"    pm.expect(pm.response.code).to.equal(201);\r",
+							"});\r",
+							"var name = pm.response.text();\r",
+							"var marker = \"mtext-integration-adapter/document/\";\r",
+							"var pos = name.indexOf(marker);\r",
+							"var docname = name.substr(pos + marker.length);\r",
+							"var docname2 = docname.replace(/\\//g, \"\\\\\");\r",
+							"pm.test(\"Document \\\\\" + docname2 + \" created\", function() {});\r",
+							"console.log(\"Document \\\\\" + docname2 + \" created\");\r",
+							"pm.variables.set(\"doc-name\", \"\\\\\"+docname2);\r",
+							"pm.environment.set(\"doc-name\", \"\\\\\"+docname2);\r",
+							"pm.collectionVariables.set(\"doc-name\", \"\\\\\"+docname2);\r",
+							"pm.variables.set(\"docname\", docname);\r",
+							"pm.environment.set(\"docname\", docname);\r",
+							"pm.collectionVariables.set(\"docname\", docname);\r",
+							"pm.variables.set(\"inputid\", null);\r",
+							"pm.environment.set(\"inputid\", null);\r",
+							"pm.collectionVariables.set(\"inputid\", null);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "multipart/form-data"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "xml:{{datasource}}",
+							"description": "(Required) The name of the data source with prefix, e.g. xml:DATA or embeddedObject:images/example.jpg It is allowed to pass several objects in one request (that means having several file parameters in the multipart form). The Unicode name for embedded objects should be normalized using Normalization Form C (NFC), see java.text.Normalizer.\n",
+							"type": "file",
+							"src": "Daten_04.xml"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/template/:template-name/create?document-name={{documentNamePrefix}}_{{$guid}}&mtext.documentMetaDataParameter.Metadata.Assignee={{guid}}&mtext.documentMetaDataParameter.Metadata.GroupAssignee={{rolename}}&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"template",
+						":template-name",
+						"create"
+					],
+					"query": [
+						{
+							"key": "document-name",
+							"value": "{{documentNamePrefix}}_{{$guid}}",
+							"description": "(Required) The document name (if fully qualified with slashes)."
+						},
+						{
+							"key": "create-missing-folders",
+							"value": "false",
+							"description": "true if non existing folders in the absolute or relative path should be created instead of throwing a FolderNotFoundException.\n",
+							"disabled": true
+						},
+						{
+							"key": "execute-document-models",
+							"value": "false",
+							"description": "true if the document models should be executed before the save.",
+							"disabled": true
+						},
+						{
+							"key": "mtext.documentDataBindingParameter.*",
+							"value": "<string>",
+							"description": "Parameters starting with mtext.documentDataBindingParameter. are passed to the document data binding as parameter.\n",
+							"disabled": true
+						},
+						{
+							"key": "mtext.documentMetaDataParameter.Metadata.Assignee",
+							"value": "{{guid}}",
+							"description": "Parameters starting with mtext.documentMetaDataParameter. are passed to the document as metadata values.\n"
+						},
+						{
+							"key": "mtext.documentMetaDataParameter.Metadata.GroupAssignee",
+							"value": "{{rolename}}"
+						},
+						{
+							"key": "csv.<dataSourceName>.separator",
+							"value": "<string>",
+							"description": "The separator used in the CSV lines. Default is comma. Example: csv.DATA.separator=;\n",
+							"disabled": true
+						},
+						{
+							"key": "csv.<dataSourceName>.encoding",
+							"value": "UTF-8",
+							"description": "The encoding of the CSV data. Example: csv.DATA.encoding=ISO-8859-15\n",
+							"disabled": true
+						},
+						{
+							"key": "csv.<dataSourceName>.columnNames",
+							"value": "<string>",
+							"description": "If the column names are not the first line in the CSV data, then the column names need to be passed here. The names must be separated by the specified separator. Example: csv.DATA.columnNames=FirstName;LastName\n",
+							"disabled": true
+						},
+						{
+							"key": "mtext.executeDocumentDataBindingConfiguration.regressionTest",
+							"value": "false",
+							"description": "Specifies a value to be used for the M/TEXT system variable `*MT-REGRESSIONTEST` and as a result of the built-in JavaScript function isRegressionTest(). The default null value indicates that the value of the variable and the return value of the function should be false. The option is meant to be used for regression test to allow that a fixed text is printed on a place where a value depending on current system time would normally be printed (e.g. in a JavaScript function returning current date to be printed on the document).\n",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}",
+							"description": "the login id to be used if single sign on or a technical user is not used.\n"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"description": "the encrypted password if single sign on or a technical user is not used. As an alternative to this parameter the password can be passed unencrypted via the parameter passwordplain.\n",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}",
+							"description": "the password if single sign on or a technical user is not used. As a preferred alternative to this parameter the password can be passed encrypted via the parameter password.\n"
+						}
+					],
+					"variable": [
+						{
+							"key": "template-name",
+							"value": "{{template}}",
+							"description": "(Required) The template name (if fully qualified with slashes). Because a double slash is not recognized by the server, the engine tries to find the template with a prepended \\library if the template was not found via the specified name.\n"
+						}
+					]
+				},
+				"description": "Creates a M/TEXT document using document data binding. It binds together a document template (initial text content of the document), data source definitions and data mappings to be applied on it. The names of the data sources must be prefixed by xml:, csv: or json:, depending on which data source (XMLDataSource, CSVDataSource or JSONDataSource) should be used to create the document.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "List users postbox",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Check documents in postbox\", function() {\r",
+							"    pm.expect(jsonData.length).to.gt(0, \"Should be 1 document or more in list\");\r",
+							"    var found = false;\r",
+							"    var docname = pm.variables.get(\"doc-name\");\r",
+							"    for(var i = 0; !found && i < jsonData.length; i++) {\r",
+							"        if (jsonData[i].qualifiedDocumentName == docname) {\r",
+							"            found = true;\r",
+							"        }\r",
+							"    }\r",
+							"    pm.expect(found).to.be.true;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/postbox-folder/documents?sortBy=MODIFIED_ON&sortOrder=desc&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"postbox-folder",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "beginIndex",
+							"value": "-1",
+							"disabled": true
+						},
+						{
+							"key": "endIndex",
+							"value": "-1",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "aliquip Lorem labore ipsum",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "MODIFIED_ON"
+						},
+						{
+							"key": "sortOrder",
+							"value": "desc"
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "aliquip Lorem labore ipsum",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document infos: read document information",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/info?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"info"
+					],
+					"query": [
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document infos: read the metadata of this document",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/metadata?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"metadata"
+					],
+					"query": [
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"description": "The Job Execution Strategy",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"description": "The document password",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"description": "Should be the document content transfered to the client on job execution?\n",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.documentVersion",
+							"value": "<integer>",
+							"description": "In contrast to the original M/TEXT API here the versionId (the long value that is returned by de.kwsoft.mtext.api.DocumentVersion.getVersionId()) needs to be passed instead of the de.kwsoft.mtext.api.DocumentVersion object.\n",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.resourceTimestamp",
+							"value": "<string>",
+							"description": "If specified it needs to be in format yyyy-MM-dd HH:mm:ss.\n",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}",
+							"description": "the login id to be used if single sign on or a technical user is not used.\n"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"description": "the encrypted password if single sign on or a technical user is not used. As an alternative to this parameter the password can be passed unencrypted via the parameter passwordplain.\n",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}",
+							"description": "the password if single sign on or a technical user is not used. As a preferred alternative to this parameter the password can be passed encrypted via the parameter password.\n"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}",
+							"description": "(Required) The document name (if fully qualified with slashes)."
+						}
+					]
+				},
+				"description": "Returns the metadata of this document.\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Document infos: read data provider names",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"// Set \r",
+							"pm.variables.set(\"docname\", pm.request.url.variables.get(\"doc-name\"));\r",
+							"pm.variables.set(\"dataprovidernames\", jsonData);\r",
+							"\r",
+							"pm.variables.clear(\"dataprovidername\");\r",
+							"if (jsonData.length > 0) {\r",
+							"    var n = pm.variables.get(\"dataprovidernames-next\");\r",
+							"    if (n == null) {\r",
+							"        n = 0;\r",
+							"        pm.environment.set(\"dataprovidernames-next\", 0);\r",
+							"        pm.test(\"Document has \" + jsonData.length + \" data providers.\", function() {});\r",
+							"    }\r",
+							"    else {\r",
+							"        n = n + 1;\r",
+							"        pm.environment.set(\"dataprovidernames-next\", n);\r",
+							"    }\r",
+							"    if (n < jsonData.length) {\r",
+							"        pm.variables.set(\"dataprovidername\", jsonData[n].name);\r",
+							"        pm.collectionVariables.set(\"dataprovidername\", jsonData[n].name);\r",
+							"        postman.setNextRequest(\"Document infos: read data provider data\");\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.environment.set(\"dataprovidernames-next\", null);\r",
+							"        postman.setNextRequest(\"Print document to M/OMS\");\r",
+							"    }\r",
+							"}\r",
+							"else {\r",
+							"    pm.test(\"Document has no data providers!\", function() {});\r",
+							"    postman.setNextRequest(\"Print document to M/OMS\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/data-provider-names?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"data-provider-names"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						},
+						{
+							"key": "password",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document infos: read data provider data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.test(\"Dataprovider \" + pm.variables.get(\"dataprovidername\")  + \" read.\", function() {});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setNextRequest(\"Document infos: read data provider names\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/data-provider?data-provider-name={{dataprovidername}}&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"data-provider"
+					],
+					"query": [
+						{
+							"key": "data-provider-name",
+							"value": "{{dataprovidername}}"
+						},
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Print document to M/OMS",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*{\r",
+							"    \"entries\": {\r",
+							"        \"InputId\": 21\r",
+							"    },\r",
+							"    \"numberOfPages\": 7\r",
+							"}*/\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Document printed to M/OMS\", function() {\r",
+							"    pm.expect(pm.response.code).to.oneOf([200]);\r",
+							"    pm.expect(jsonData).to.have.property(\"entries\");\r",
+							"});\r",
+							"if (jsonData.entries) {\r",
+							"    pm.test(\"Document with \" + jsonData.numberOfPages + \" pages printed to M/OMS. Document has KW_INPUT_ID = \" + jsonData.entries.InputId + \".\", function() {});\r",
+							"    pm.variables.set(\"inputid\", jsonData.entries.InputId);\r",
+							"    pm.environment.set(\"inputid\", jsonData.entries.InputId);\r",
+							"    pm.collectionVariables.set(\"inputid\", jsonData.entries.InputId);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/print?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"print"
+					],
+					"query": [
+						{
+							"key": "destination",
+							"value": "OMS",
+							"disabled": true
+						},
+						{
+							"key": "execute-document-models",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "save-after-operation",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.printAll",
+							"value": "<integer>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.errorModelName",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.variable90Print",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.printOffline",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.documentVersion",
+							"value": "<integer>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.resourceTimestamp",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.formatterDestination",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.additionalDestinations",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.fixedDate",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.regressionTest",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update document metadata",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"key\": \"Metadata.State\",\r\n        \"value\": \"Printed\"\r\n    },\r\n    {\r\n        \"key\": \"Metadata.Assignee\",\r\n        \"value\": \"\"\r\n    }\r\n]"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/metadata?is-delta=true&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"metadata"
+					],
+					"query": [
+						{
+							"key": "is-delta",
+							"value": "true"
+						},
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Export as PDF",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/export?mime-type=application/pdf&download=false&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"export"
+					],
+					"query": [
+						{
+							"key": "mime-type",
+							"value": "application/pdf"
+						},
+						{
+							"key": "download",
+							"value": "false"
+						},
+						{
+							"key": "stream",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.stylesheet",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.destinationName",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.formatterDestination",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.resourceTimestamp",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.documentVersion",
+							"value": "<integer>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.requestedPage",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.additionalDestinations",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.fixedDate",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.exportDocumentConfiguration.regressionTest",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Read M/OMS splitdocuments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*\r",
+							"[{\r",
+							"    \"inputId\": 53,\r",
+							"    \"inputTime\": \"2022-04-03T17:26:58+02:00\",\r",
+							"    \"status\": {\r",
+							"        \"int\": 2,\r",
+							"        \"string\": \"SPLITTED\"\r",
+							"    },\r",
+							"    \"splitDocuments\": [{\r",
+							"        \"kwSplitId\": 103,\r",
+							"        \"kwInputId\": 53,\r",
+							"        \"kwSplitTime\": \"2022-04-03T17:26:58+02:00\",\r",
+							"        \"kwStatus\": {\r",
+							"            \"int\": 1,\r",
+							"            \"string\": \"WAIT_FOR_STACK_PROCESSING\"\r",
+							"        },\r",
+							"        \"kwErrorMsg\": null,\r",
+							"        \"kwMedium\": \"PRINT\",\r",
+							"        \"kwTypeFlag\": 0,\r",
+							"        \"kwTypeNumber\": 0,\r",
+							"        \"kwSplitPages\": 1,\r",
+							"        \"kwSplitSheets\": 1,\r",
+							"        \"kwStackSheets\": 0,\r",
+							"        \"kwCollectFileId\": null,\r",
+							"        \"kwStackPos\": null,\r",
+							"        \"kwOnlineStackRunId\": null,\r",
+							"        \"kwTypeFormat\": \"1\",\r",
+							"        \"kwPriority\": 0,\r",
+							"        \"kwRendererDestination\": null,\r",
+							"        \"kwForm\": null,\r",
+							"        \"kwSpoolerId\": null,\r",
+							"        \"kwRunId\": 0,\r",
+							"        \"kwGroupId\": null,\r",
+							"        \"kwGroupPos\": null,\r",
+							"        \"kwBatch\": \"0\",\r",
+							"        \"kwBatchId\": null,\r",
+							"        \"kwBatchTyp\": 0,\r",
+							"        \"kwBatchDokNr\": 0,\r",
+							"        \"kwGroupSheets\": null,\r",
+							"        \"kwGroupDocs\": null,\r",
+							"        \"customMomsParameters\": [{\r",
+							"            \"name\": \"MAIL_TO\",\r",
+							"            \"d\": \"MscStringParameter\",\r",
+							"            \"value\": null\r",
+							"        }, {\r",
+							"            \"name\": \"RECIPIENT_ZIP\",\r",
+							"            \"d\": \"MscStringParameter\",\r",
+							"            \"value\": null\r",
+							"        }, {\r",
+							"            \"name\": \"RECIPIENT_COUNTRY_CODE\",\r",
+							"            \"d\": \"MscStringParameter\",\r",
+							"            \"value\": null\r",
+							"        }, {\r",
+							"            \"name\": \"RECIPIENT_ADDRESSEE_NAME\",\r",
+							"            \"d\": \"MscStringParameter\",\r",
+							"            \"value\": null\r",
+							"        }, {\r",
+							"            \"name\": \"RECIPIENT_ID\",\r",
+							"            \"d\": \"MscStringParameter\",\r",
+							"            \"value\": null\r",
+							"        }, {\r",
+							"            \"name\": \"RECIPIENT_CITY\",\r",
+							"            \"d\": \"MscStringParameter\",\r",
+							"            \"value\": null\r",
+							"        }, {\r",
+							"            \"name\": \"FAX_RECIPIENT\",\r",
+							"            \"d\": \"MscStringParameter\",\r",
+							"            \"value\": null\r",
+							"        }]\r",
+							"    }],\r",
+							"    \"errorMsg\": null\r",
+							"}]\r",
+							"*/\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Check M/OMS input doc \" + pm.variables.get(\"inputid\"), function() {\r",
+							"    pm.expect(jsonData.length).is.equal(1, \"Should be 1\");\r",
+							"});\r",
+							"pm.test(\"Check M/OMS input doc \" + pm.variables.get(\"inputid\") + \" state\", function() {\r",
+							"    pm.expect(jsonData[0].status.int).is.equal(2, \"Should be 2 (SPLITTED)\");\r",
+							"});\r",
+							"pm.test(\"Check M/OMS input doc \" + pm.variables.get(\"inputid\") + \" split document count\", function() {\r",
+							"    pm.expect(jsonData[0].splitDocuments.length).is.gte(1, \"Should be 1 or more\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"select\": [\r\n        {\r\n            \"equal\": { \r\n                \"parameterName\" : \"KW_INPUT_ID\",\r\n                \"value\": \"{{inputid}}\"\r\n            }\r\n        }\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrlMOMS}}/input-doc/with-exclusive-split-docs2?passwordplain={{password}}&user={{username}}",
+					"host": [
+						"{{baseUrlMOMS}}"
+					],
+					"path": [
+						"input-doc",
+						"with-exclusive-split-docs2"
+					],
+					"query": [
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						},
+						{
+							"key": "password",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update document data",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "xml:{{datasource}}",
+							"type": "file",
+							"src": "Daten_03.xml"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/update?template-name={{template}}&mtext.documentDataBindingParameter.Metadata.State=Updated&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"update"
+					],
+					"query": [
+						{
+							"key": "template-name",
+							"value": "{{template}}"
+						},
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "execute-document-models",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "mtext.documentDataBindingParameter.Metadata.State",
+							"value": "Updated"
+						},
+						{
+							"key": "csv.<dataSourceName>.separator",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "csv.<dataSourceName>.encoding",
+							"value": "UTF-8",
+							"disabled": true
+						},
+						{
+							"key": "csv.<dataSourceName>.columnNames",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.executeDocumentDataBindingConfiguration.regressionTest",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List users group postbox",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Check documents in group postbox\", function() {\r",
+							"    pm.expect(jsonData.length).to.gt(0, \"Should be 1 document or more in list\");\r",
+							"    var found = false;\r",
+							"    var docname = pm.variables.get(\"doc-name\");\r",
+							"    for(var i = 0; !found && i < jsonData.length; i++) {\r",
+							"        if (jsonData[i].qualifiedDocumentName == docname) {\r",
+							"            found = true;\r",
+							"        }\r",
+							"    }\r",
+							"    pm.expect(found).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/group-postbox-folder/documents?sortBy=MODIFIED_ON&sortOrder=desc&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"group-postbox-folder",
+						"documents"
+					],
+					"query": [
+						{
+							"key": "beginIndex",
+							"value": "-1",
+							"disabled": true
+						},
+						{
+							"key": "endIndex",
+							"value": "-1",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "aliquip Lorem labore ipsum",
+							"disabled": true
+						},
+						{
+							"key": "sortBy",
+							"value": "MODIFIED_ON"
+						},
+						{
+							"key": "sortOrder",
+							"value": "desc"
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "aliquip Lorem labore ipsum",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Print document to M/OMS (2nd)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*{\r",
+							"    \"entries\": {\r",
+							"        \"InputId\": 21\r",
+							"    },\r",
+							"    \"numberOfPages\": 7\r",
+							"}*/\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Document with \" + jsonData.numberOfPages + \" pages printed to M/OMS. Document hast KW_INPUT_ID = \" + jsonData.entries.InputId + \".\", function() {});\r",
+							"pm.variables.set(\"inputid\", jsonData.entries.InputId);\r",
+							"pm.environment.set(\"inputid\", jsonData.entries.InputId);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var inputid = pm.variables.get(\"inputid\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/print?destination=OMS&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"print"
+					],
+					"query": [
+						{
+							"key": "destination",
+							"value": "OMS"
+						},
+						{
+							"key": "execute-document-models",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "save-after-operation",
+							"value": "true",
+							"disabled": true
+						},
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.printAll",
+							"value": "<integer>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.errorModelName",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.variable90Print",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.printOffline",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.documentVersion",
+							"value": "<integer>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.resourceTimestamp",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.formatterDestination",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.additionalDestinations",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.fixedDate",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.printConfiguration.regressionTest",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document infos: read document information (2nd)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/info?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"info"
+					],
+					"query": [
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document infos: read data provider names (2nd)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"// Set \r",
+							"pm.variables.set(\"docname\", pm.request.url.variables.get(\"doc-name\"));\r",
+							"pm.variables.set(\"dataprovidernames\", jsonData);\r",
+							"\r",
+							"pm.variables.clear(\"dataprovidername\");\r",
+							"if (jsonData.length > 0) {\r",
+							"    var n = pm.variables.get(\"dataprovidernames-next\");\r",
+							"    if (n == null) {\r",
+							"        n = 0;\r",
+							"        pm.environment.set(\"dataprovidernames-next\", 0);\r",
+							"    }\r",
+							"    else {\r",
+							"        n = n + 1;\r",
+							"        pm.environment.set(\"dataprovidernames-next\", n);\r",
+							"    }\r",
+							"    if (n < jsonData.length) {\r",
+							"        pm.variables.set(\"dataprovidername\", jsonData[n].name);\r",
+							"        postman.setNextRequest(\"Document infos: read data provider data (2nd)\");\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.environment.set(\"dataprovidernames-next\", null);\r",
+							"        postman.setNextRequest(\"Query printout information\");\r",
+							"    }\r",
+							"}\r",
+							"else {\r",
+							"    postman.setNextRequest(\"Query printout information\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/data-provider-names?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"data-provider-names"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						},
+						{
+							"key": "password",
+							"value": null,
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Document infos: read data provider data (2nd)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.test(\"Dataprovider \" + pm.variables.get(\"dataprovidername\")  + \" read.\", function() {});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"postman.setNextRequest(\"Document infos: read data provider names (2nd)\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/data-provider?data-provider-name={{dataprovidername}}&user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"data-provider"
+					],
+					"query": [
+						{
+							"key": "data-provider-name",
+							"value": "{{dataprovidername}}"
+						},
+						{
+							"key": "mtext.jobConfiguration.executionStrategy",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.DocumentPassword",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "mtext.openTextDocumentConfiguration.transferContent",
+							"value": "<boolean>",
+							"disabled": true
+						},
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "false",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Query printout information",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"Document printed to M/OMS\", function() {\r",
+							"    pm.expect(jsonData.length).to.equal(2, \"Is printed 2x to OMS\");\r",
+							"    for(var i = 0; i < jsonData.length; i++) {\r",
+							"        pm.expect(jsonData[i].destination).to.equal(\"OMS\", \"Destination is always OMS\");\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/document/:doc-name/printout-information?user={{username}}&passwordplain={{password}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"document",
+						":doc-name",
+						"printout-information"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{username}}"
+						},
+						{
+							"key": "password",
+							"value": "<string>",
+							"disabled": true
+						},
+						{
+							"key": "passwordplain",
+							"value": "{{password}}"
+						}
+					],
+					"variable": [
+						{
+							"key": "doc-name",
+							"value": "{{docname}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseHost",
+			"value": "https://ENTER-YOUR-MTEXT-SERER",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "ENTER-YOUR-USERNAME",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "ENTER-YOUR-PASSWORD",
+			"type": "string"
+		},
+		{
+			"key": "version",
+			"value": "6.13",
+			"type": "string"
+		},
+		{
+			"key": "baseUrl",
+			"value": "{{baseHost}}/mtext-integration-adapter",
+			"type": "string"
+		},
+		{
+			"key": "baseUrlMOMS",
+			"value": "{{baseHost}}/moms-integration-adapter",
+			"type": "string"
+		},
+		{
+			"key": "template",
+			"value": "\\library\\bsp_Anschreiben\\Vorlagen\\{{templateSearchName}}.template",
+			"type": "string"
+		},
+		{
+			"key": "guid",
+			"value": "NOGUIDFOUND",
+			"type": "string"
+		},
+		{
+			"key": "rolename",
+			"value": "NOROLEFOUND",
+			"type": "string"
+		},
+		{
+			"key": "docname",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "doc-name",
+			"value": ""
+		},
+		{
+			"key": "datasource",
+			"value": "DATA",
+			"type": "string"
+		},
+		{
+			"key": "dataprovidername",
+			"value": "Metadata",
+			"type": "string"
+		},
+		{
+			"key": "documentNamePrefix",
+			"value": "WillkommenDocument",
+			"type": "string"
+		},
+		{
+			"key": "templateSearchName",
+			"value": "Willkommen",
+			"type": "string"
+		},
+		{
+			"key": "inputid",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
