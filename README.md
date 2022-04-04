@@ -6,7 +6,6 @@ A postman collection demonstrating the usage of some M/TEXT and M/OMS rest api m
 
 To test this postman collection install M/TEXT version 6.12 or 6.13 on your computer. If you have access to a M/TEXT system
 activate the sample projects from M/Workbench on the server.
-Copy the xml files to your postman working directory. 
 
 Import the collection to your postman workspace. Open the collection and go to variables tab and change the marked variables 
 with your values. 
@@ -14,10 +13,6 @@ Please omit the trailing slash of baseHost parameter. The password is clear text
 If you are running this collection on a M/TEXT 6.12 version adjust the expected version.
 
 ![grafik](https://user-images.githubusercontent.com/30256627/161446982-5ee43afa-a32e-4b9f-837e-a9eafc0f03f7.png)
-
-The marked requests will send some xml data in a multipart/form-data body. For this purpose, the XML files mentioned above are used. Please make sure that the files are available.
-
-![image](https://user-images.githubusercontent.com/8683821/161506801-2e96a54d-21ba-470c-b144-5e2d397878ef.png)
 
 ## Requests in detail
 
