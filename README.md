@@ -10,7 +10,7 @@ Copy the xml files to your postman working directory.
 
 Import the collection to your postman workspace. Open the collection and go to variables tab and change the marked variables 
 with your values. 
-The password is clear text. 
+Please omit the trailing slash of baseHost parameter. The password is clear text. 
 If you are running this collection on a M/TEXT 6.12 version adjust the expected version.
 
 ![grafik](https://user-images.githubusercontent.com/30256627/161446982-5ee43afa-a32e-4b9f-837e-a9eafc0f03f7.png)
