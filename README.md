@@ -5,7 +5,7 @@ A postman collection demonstrating the usage of some M/TEXT and M/OMS rest api m
 ## Preparation
 
 To test this postman collection install M/TEXT version 6.12 or 6.13 on your computer. If you have access to a M/TEXT system
-activate the sample projects from M/Workbench in the server.
+activate the sample projects from M/Workbench on the server.
 Copy the xml files to your postman working directory. 
 
 Import the collection to your postman workspace. Open the collection and go to variables tab and change the marked variables 
@@ -15,9 +15,9 @@ If you are running this collection on a M/TEXT 6.12 version adjust the expected 
 
 ![grafik](https://user-images.githubusercontent.com/30256627/161446982-5ee43afa-a32e-4b9f-837e-a9eafc0f03f7.png)
 
-The marked request are sending some xml file content in a mimepart. Check that the files are found.
+The marked requests will send some xml data in a multipart/form-data body. For this purpose, the XML files mentioned above are used. Please make sure that the files are available.
 
-![grafik](https://user-images.githubusercontent.com/30256627/161446844-5a987141-4827-430f-939f-81119e55ac68.png)
+![image](https://user-images.githubusercontent.com/8683821/161506801-2e96a54d-21ba-470c-b144-5e2d397878ef.png)
 
 ## Requests in detail
 
@@ -70,10 +70,10 @@ Read user information from the current user.
 * guid
 * role membership
 
-The guid can be used to assign the document at creation to the creator. This is done by setting a default metadata called assignee. The document is 
-querable in the postbox of the user (see request "List users postbox"). 
+The guid can be used to assign the document to the creator. This is done by setting a default metadata called assignee. The document is 
+queryable in the postbox of the user (see request "List users postbox"). 
 
-The choosen user should be member of a M/TEXT role. This role is taken to assign the document to a group of users which own that role. The document is querable in the group postbox showing documents which are assigned to roles the current user owns.
+The choosen user should be member of a M/TEXT role. This role is taken to assign the document to a group of users which own that role. The document is queryable in the group postbox showing documents which are assigned to roles the current user owns.
 
 ### Query template (GET)
 
@@ -83,20 +83,20 @@ Parameters:
 * filter -  filter expression to restrict the list of templates
 * project-name - optional name of project to restrict the list of templates
 
-M/TEXT uses template to create a document from. The request show who to search a template by its name. 
+M/TEXT uses a template to create a document from. The request shows how to search a template by its name. 
 The filter expression can contain a complex query:
 
 ```
 Name like "Willkommen*" AND DocumentType "TONIC"
 ```
 
-Template can have metadata, which can also be used to search templates.
+Templates can have metadata, which can also be used to search for templates.
 
 ```
 METADATA.SPARTE = "Kfz-Versicherung" AND DocumentType "TONIC"
 ```
 
-Assuming some fictional metadata a query can be something like this:
+Assuming some fictional metadata a query could look like this:
 
 ```
 METADATA.TEMPLATE.CATEGORY = 'ACATEGORY' AND 
@@ -112,7 +112,7 @@ Parameters:
 Path parameters:
 * template-name - full qualified name of template
 
-Template have metadata to describe and configure general parameters. The metadata can be used to query templates.
+Templates have metadata to describe and configure general parameters. The metadata can be used to query templates.
 
 ### Returns list of datasources (GET)
 
@@ -123,7 +123,7 @@ Parameters:
 Path parameters:
 * template-name - full qualified name of template
 
-Templates get there data for document creation in datasources. A datasource can be a xml, json or csv stream. The name of datasource is imported because it must be given to put the data into the right datasource. Use always the same name for your datasources is property style. 
+Templates get their data for document creation in datasources. A datasource can be a xml, json or csv stream. The name of datasource is imported because it must be given to put the data into the right datasource. Use always the same name for your datasources is property style. 
 
 At kwsoft consulting we suggest to name it **DATA**. 
 
