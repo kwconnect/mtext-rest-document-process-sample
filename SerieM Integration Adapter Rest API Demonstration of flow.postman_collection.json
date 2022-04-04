@@ -336,6 +336,7 @@
 							"    pm.expect(jsonData.length).to.gt(0);\r",
 							"    pm.variables.set(\"template\", jsonData[0].fullName);\r",
 							"    pm.collectionVariables.set(\"template\", jsonData[0].fullName);\r",
+							"    pm.collectionVariables.set(\"template-name\", jsonData[0].fullName.replace(/\\\\/g, \"/\"));\r",
 							"    console.info(\"Template \" + pm.variables.get(\"template\") + \" picked\");\r",
 							"});\r",
 							"pm.test(\"Template \" + pm.variables.get(\"template\") + \" picked...\", function() {\r",
@@ -553,9 +554,9 @@
 					"formdata": [
 						{
 							"key": "xml:{{datasource}}",
+							"value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!-- D e p o t ü b e r s i c h t -->\n<depot>\n\t<!-- K u n d e (Anschrift) -->\n\t<Vermerkzone>\n\t\t<zusatz1></zusatz1>\n\t\t<zusatz2>Vertraulich</zusatz2>\n\t</Vermerkzone>\n\t<kunde>\n\t\t<anrede>Frau</anrede>\n\t\t<titel>Dr.</titel>\n\t\t<vorname>Waltraut</vorname>\n\t\t<name>Vogel</name>\n\t\t<strasse>Rosenweg 4</strasse>\n\t\t<plz>07740</plz>\n\t\t<ort>Jena</ort>\n\t\tEinschreiben\n\t</kunde>\n\t<!-- A L L G E M E I N E V E R S I C H E R U N G S D A T E N K U N D E -->\n\t<versicherungsdaten>\n\t\t<versicherungsnummer>123-465-A5</versicherungsnummer>\n\t\t<versicherungsart>Kfz-Versicherung</versicherungsart>\n\t</versicherungsdaten>\n\t<!-- S a c h b e a r b e i t e r -->\n\t<sachbearbeiter>\n\t\t<anrede>Herr</anrede>\n\t\t<name>Erich Hofmeier</name>\n\t\t<abteilung>Kundenservice</abteilung>\n\t\t<telefon>07766 (99 66 44)</telefon>\n\t\t<telefax>07766 (99 66 66)</telefax>\n\t\t<email>erich.hofmeier@company.de</email>\n\t\t<kuerzel>erho</kuerzel>\n\t</sachbearbeiter>\n\t<!-- V E R S I C H E R U N G S D A T E N L E B E N S V E R S I C H E R U \n\t\tN G -->\n\t<versicherungsdatenLV>\n\t\t<reserven>669.26</reserven>\n\t\t<rückkaufwert>11,087.32</rückkaufwert>\n\t\t<überschuss>3,690.51</überschuss>\n\t\t<VersPerson>Dr. Kurt Graf</VersPerson>\n\t\t<WertDatum>01.11.2018</WertDatum>\n\t</versicherungsdatenLV>\n\t<!-- D e p o t -->\n\t<aktien>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t</aktien>\n</depot>",
 							"description": "(Required) The name of the data source with prefix, e.g. xml:DATA or embeddedObject:images/example.jpg It is allowed to pass several objects in one request (that means having several file parameters in the multipart form). The Unicode name for embedded objects should be normalized using Normalization Form C (NFC), see java.text.Normalizer.\n",
-							"type": "file",
-							"src": "Daten_04.xml"
+							"type": "text"
 						}
 					]
 				},
@@ -1503,6 +1504,17 @@
 		},
 		{
 			"name": "Update document data",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -1511,13 +1523,13 @@
 					"formdata": [
 						{
 							"key": "xml:{{datasource}}",
-							"type": "file",
-							"src": "Daten_03.xml"
+							"value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!-- D e p o t ü b e r s i c h t -->\n<depot>\n\t<!-- K u n d e (Anschrift) -->\n\t<Vermerkzone>\n\t\t<zusatz1>Einschreiben</zusatz1>\n\t\t<zusatz2>Persönlich</zusatz2>\n\t</Vermerkzone>\n\t<kunde>\n\t\t<anrede>Herr</anrede>\n\t\t<vorname>Raphael</vorname>\n\t\t<name>Lucan</name>\n\t\t<strasse>Leipziger Str. 17</strasse>\n\t\t<plz>48163</plz>\n\t\t<ort>Münster</ort>\n\t\t<land />\n\t</kunde>\n\t<!-- A L L G E M E I N E V E R S I C H E R U N G S D A T E N K U N D E -->\n\t<versicherungsdaten>\n\t\t<versicherungsnummer>123-465-C8</versicherungsnummer>\n\t\t<versicherungsart>Kfz-Versicherung</versicherungsart>\n\t</versicherungsdaten>\n\t<!-- S a c h b e a r b e i t e r -->\n\t<sachbearbeiter>\n\t\t<anrede>Herr</anrede>\n\t\t<name>Erich Hofmeier</name>\n\t\t<abteilung>Kundenservice</abteilung>\n\t\t<telefon>07766 (99 66 44)</telefon>\n\t\t<telefax>07766 (99 66 66)</telefax>\n\t\t<email>erich.hofmeier@web.de</email>\n\t\t<kuerzel>erho</kuerzel>\n\t</sachbearbeiter>\n\t<!-- V E R S I C H E R U N G S D A T E N L E B E N S V E R S I C H E R U \n\t\tN G -->\n\t<versicherungsdatenLV>\n\t\t<reserven>680.30</reserven>\n\t\t<rückkaufwert>10,077.30</rückkaufwert>\n\t\t<überschuss>1,221.21</überschuss>\n\t\t<VersPerson>Raphael Lucan</VersPerson>\n\t\t<WertDatum>01.11.2018</WertDatum>\n\t</versicherungsdatenLV>\n\t<!-- D e p o t -->\n\t<aktien>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t</aktien>\n</depot>",
+							"type": "text"
 						}
 					]
 				},
 				"url": {
-					"raw": "{{baseUrl}}/document/:doc-name/update?template-name={{template}}&mtext.documentDataBindingParameter.Metadata.State=Updated&user={{username}}&passwordplain={{password}}",
+					"raw": "{{baseUrl}}/document/:doc-name/update?template-name={{template-name}}&mtext.documentDataBindingParameter.Metadata.State=Updated&user={{username}}&passwordplain={{password}}",
 					"host": [
 						"{{baseUrl}}"
 					],
@@ -1529,7 +1541,7 @@
 					"query": [
 						{
 							"key": "template-name",
-							"value": "{{template}}"
+							"value": "{{template-name}}"
 						},
 						{
 							"key": "mtext.jobConfiguration.executionStrategy",
@@ -2149,6 +2161,11 @@
 		{
 			"key": "template",
 			"value": "\\library\\bsp_Anschreiben\\Vorlagen\\{{templateSearchName}}.template",
+			"type": "string"
+		},
+		{
+			"key": "template-name",
+			"value": "/library/bsp_Anschreiben/Vorlagen/{{templateSearchName}}.template",
 			"type": "string"
 		},
 		{
