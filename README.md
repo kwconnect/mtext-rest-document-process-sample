@@ -32,18 +32,14 @@ Parameters:
 * passwordplain - password in clear text
 * filter - filter expression to query documents
 
-The request queries the M/TEXT database for sample documents. It shows a simple search of documents starting with a given name.
-The filter is using a simple query by name.
+The request queries the M/TEXT database for sample documents. It shows a simple search for documents starting with a given name.
 
 ```
 Name like "WillkommenDocument*"
 ```
 
-The query can be more complex. Every searchable metadata and datamodel node can be used to query documents. The documents are search accross the 
-whole document storage of M/TEXT.
-There are other methods to search documents in a known folder or quering the postbox of the current user.
-
-The test script calls the request "Delete document" to delete all existing sample documents.
+The filter expression can become arbitrarily complex. Every searchable metadata and datamodel node can be used to query documents. The documents are searched accross the whole document storage of M/TEXT.
+There are other methods to search documents in a known folder or querying the postbox of the current user.
 
 ### Delete document (DELETE)
 
