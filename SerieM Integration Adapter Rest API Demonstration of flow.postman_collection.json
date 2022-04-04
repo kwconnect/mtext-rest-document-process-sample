@@ -25,6 +25,18 @@
 						],
 						"type": "text/javascript"
 					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var basehost = pm.collectionVariables.get(\"baseHost\");\r",
+							"if (basehost.endsWith(\"/\")) {\r",
+							"    pm.collectionVariables.set(\"baseHost\", basehost.substring(0, basehost.length - 1));\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
 				}
 			],
 			"request": {
