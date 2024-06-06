@@ -4,8 +4,9 @@ A postman collection demonstrating the usage of some M/TEXT and M/OMS rest api m
 
 ## Preparation
 
-To test this postman collection install M/TEXT version 6.12 or 6.13 on your computer. If you have access to a M/TEXT system
+To test this postman collection install M/TEXT version 6.15 on your computer. If you have access to a M/TEXT system
 activate the sample projects from M/Workbench on the server.
+The sample projects have changed in 6.15 version. Please check to use sample projects from 6.15 M/Workbench.
 
 Import the collection to your postman workspace. Open the collection and go to variables tab and change the marked variables 
 with your values. 
