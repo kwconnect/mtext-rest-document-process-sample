@@ -11,7 +11,9 @@ The sample projects have changed in 6.15 version. Please check to use sample pro
 Import the collection to your postman workspace. Open the collection and go to variables tab and change the marked variables 
 with your values. 
 Please omit the trailing slash of baseHost parameter. The password is clear text. 
-If you are running this collection on a M/TEXT 6.12 version adjust the expected version.
+If you have german version of starter framework adjust project and template name to german names. This demo is prepared to
+use the english version of the starter framework.
+If you are using version 6.14 of Serie M/ adjust version number in version check at very beginning.
 
 ![grafik](https://user-images.githubusercontent.com/30256627/161446982-5ee43afa-a32e-4b9f-837e-a9eafc0f03f7.png)
 
