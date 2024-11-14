@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "38774c12-7c55-450a-9016-d0b6c2d5531f",
+		"_postman_id": "98d3afb6-5c68-461f-b269-bd4c0595acd9",
 		"name": "SerieM Integration Adapter Rest API Demonstration of flow",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9603804"
 	},
 	"item": [
 		{
@@ -342,7 +343,8 @@
 							"pm.test(\"Template \" + pm.variables.get(\"template\") + \" picked...\", function() {\r",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				},
 				{
@@ -351,7 +353,8 @@
 						"exec": [
 							"pm.variables.set(\"project\", \"SimpleSamples\");"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -377,7 +380,7 @@
 						},
 						{
 							"key": "project-name",
-							"value": "bsp_Anschreiben",
+							"value": "Demo_CustomerService",
 							"description": "Restrict to templates from one project",
 							"disabled": true
 						},
@@ -387,7 +390,7 @@
 						},
 						{
 							"key": "filter",
-							"value": "METADATA.SPARTE = \"Kfz-Versicherung\"",
+							"value": "METADATA.MODELS.TYPE = \"CustomerService\"",
 							"description": "Try different filter",
 							"disabled": true
 						}
@@ -537,7 +540,8 @@
 							"\r",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -554,7 +558,7 @@
 					"formdata": [
 						{
 							"key": "xml:{{datasource}}",
-							"value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!-- D e p o t ü b e r s i c h t -->\n<depot>\n\t<!-- K u n d e (Anschrift) -->\n\t<Vermerkzone>\n\t\t<zusatz1></zusatz1>\n\t\t<zusatz2>Vertraulich</zusatz2>\n\t</Vermerkzone>\n\t<kunde>\n\t\t<anrede>Frau</anrede>\n\t\t<titel>Dr.</titel>\n\t\t<vorname>Waltraut</vorname>\n\t\t<name>Vogel</name>\n\t\t<strasse>Rosenweg 4</strasse>\n\t\t<plz>07740</plz>\n\t\t<ort>Jena</ort>\n\t\tEinschreiben\n\t</kunde>\n\t<!-- A L L G E M E I N E V E R S I C H E R U N G S D A T E N K U N D E -->\n\t<versicherungsdaten>\n\t\t<versicherungsnummer>123-465-A5</versicherungsnummer>\n\t\t<versicherungsart>Kfz-Versicherung</versicherungsart>\n\t</versicherungsdaten>\n\t<!-- S a c h b e a r b e i t e r -->\n\t<sachbearbeiter>\n\t\t<anrede>Herr</anrede>\n\t\t<name>Erich Hofmeier</name>\n\t\t<abteilung>Kundenservice</abteilung>\n\t\t<telefon>07766 (99 66 44)</telefon>\n\t\t<telefax>07766 (99 66 66)</telefax>\n\t\t<email>erich.hofmeier@company.de</email>\n\t\t<kuerzel>erho</kuerzel>\n\t</sachbearbeiter>\n\t<!-- V E R S I C H E R U N G S D A T E N L E B E N S V E R S I C H E R U \n\t\tN G -->\n\t<versicherungsdatenLV>\n\t\t<reserven>669.26</reserven>\n\t\t<rückkaufwert>11,087.32</rückkaufwert>\n\t\t<überschuss>3,690.51</überschuss>\n\t\t<VersPerson>Dr. Kurt Graf</VersPerson>\n\t\t<WertDatum>01.11.2018</WertDatum>\n\t</versicherungsdatenLV>\n\t<!-- D e p o t -->\n\t<aktien>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t</aktien>\n</depot>",
+							"value": "<taskcontrol>\n\t<message>\n\t\t<letterdate>29.12.2024</letterdate>\n\t\t<instance>\n\t\t\t<sender>\n\t\t\t\t<Name>Company Unlimited</Name>\n\t\t\t\t<Street>Kruppallee 42</Street>\n\t\t\t\t<zip>13373</zip>\n\t\t\t\t<city>Essen</city>\n\t\t\t\t<user>\n\t\t\t\t\t<partnerid>14213373</partnerid>\n\t\t\t\t\t<userid>EH</userid>\n\t\t\t\t\t<salutation>Mr.</salutation>\n\t\t\t\t\t<title></title>\n\t\t\t\t\t<firstname>Erich</firstname>\n\t\t\t\t\t<lastname>Hofmeier</lastname>\n\t\t\t\t\t<companyname1>Company Unlimited</companyname1>\n\t\t\t\t\t<companyname2></companyname2>\n\t\t\t\t\t<houseno>42</houseno>\n\t\t\t\t\t<addresssupplement></addresssupplement>\n\t\t\t\t\t<Street>Kruppallee</Street>\n\t\t\t\t\t<zip>13373</zip>\n\t\t\t\t\t<city>Essen</city>\n\t\t\t\t\t<country></country>\n\t\t\t\t\t<address>\n\t\t\t\t\t\t<line>Company Unlimited</line>\n\t\t\t\t\t\t<line>Erich Hofmeier</line>\n\t\t\t\t\t\t<line>Kruppallee 42</line>\n\t\t\t\t\t\t<line>13373 Essen</line>\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t</address>\n\t\t\t\t\t<salutatoryaddress>Hello Mr. Brackhaus,</salutatoryaddress>\n\t\t\t\t\t<role>rückwärts</role>\n\t\t\t\t\t<email>erich.hofmeier@company.de</email>\n\t\t\t\t\t<phone>0815-47111337</phone>\n\t\t\t\t\t<fax>0815-47114242</fax>\n\t\t\t\t</user>\n\t\t\t</sender>\n\t\t\t<recipient>\n\t\t\t\t<Partner>\n\t\t\t\t\t<partnerid>20698101</partnerid>\n\t\t\t\t\t<userid></userid>\n\t\t\t\t\t<salutation>Mrs.</salutation>\n\t\t\t\t\t<title></title>\n\t\t\t\t\t<firstname>Maria</firstname>\n\t\t\t\t\t<lastname>Mercurial</lastname>\n\t\t\t\t\t<companyname1></companyname1>\n\t\t\t\t\t<companyname2></companyname2>\n\t\t\t\t\t<houseno></houseno>\n\t\t\t\t\t<addresssupplement>Postfach 1337</addresssupplement>\n\t\t\t\t\t<Street></Street>\n\t\t\t\t\t<zip>98199</zip>\n\t\t\t\t\t<city>Smaragdstadt</city>\n\t\t\t\t\t<country></country>\n\t\t\t\t\t<address>\n\t\t\t\t\t\t<line>Maria Mercurial</line>\n\t\t\t\t\t\t<line>Postfach 1337</line>\n\t\t\t\t\t\t<line>98199 Smaragdstadt</line>\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t</address>\n\t\t\t\t\t<!-- <salutatoryaddress>Hello Mrs. Mercurial,</salutatoryaddress> -->\n\t\t\t\t\t<role>vorwärts</role>\n\t\t\t\t\t<email>m.mercurial@fasa.sr</email>\n\t\t\t\t\t<phone>01989-2050</phone>\n\t\t\t\t\t<fax>01989-2001</fax>\n\t\t\t\t</Partner>\n\t\t\t\t<!-- <salutatoryaddress>Hello Mrs. Mercurial,</salutatoryaddress> -->\n\t\t\t\t<!-- <Namefirstname>Maria Mercurial</Namefirstname> -->\n\t\t\t</recipient>\n\t\t\t<outputcontrol>\n\t\t\t\t<outputchannel>CENTRALPRINTING</outputchannel>\n\t\t\t\t<CENTRALPRINTING>\n\t\t\t\t\t<Batch></Batch>\n\t\t\t\t\t<zip>98199</zip>\n\t\t\t\t\t<LKZ>DE</LKZ>\n\t\t\t\t</CENTRALPRINTING>\n\t\t\t</outputcontrol>\n\t\t\t<outputcontrol>\n\t\t\t\t<outputchannel>ARCHIVE</outputchannel>\n\t\t\t</outputcontrol>\n\t\t</instance>\n\t\t<portfolio>\n\t\t\t<position>\n\t\t\t\t<name>Gamestop Corporation</name>\n\t\t\t\t<price>15.47</price>\n\t\t\t\t<quantity>1337</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>SAP SE</name>\n\t\t\t\t<price>103.22</price>\n\t\t\t\t<quantity>23</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Infineon Technologies AG</name>\n\t\t\t\t<price>30.72</price>\n\t\t\t\t<quantity>17</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Deutsche Telekom AG</name>\n\t\t\t\t<price>19.75</price>\n\t\t\t\t<quantity>37</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Sartorius AG Vz</name>\n\t\t\t\t<price>373.70</price>\n\t\t\t\t<quantity>11</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Nordex SE</name>\n\t\t\t\t<price>14.11</price>\n\t\t\t\t<quantity>73</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Siemens Healthineers AG</name>\n\t\t\t\t<price>47.69</price>\n\t\t\t\t<quantity>31</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>AIXTRON SE</name>\n\t\t\t\t<price>28.60</price>\n\t\t\t\t<quantity>19</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>VERBIO Vereinigte BioEnergie AG</name>\n\t\t\t\t<price>60.25</price>\n\t\t\t\t<quantity>29</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>TeamViewer AG</name>\n\t\t\t\t<price>12.87</price>\n\t\t\t\t<quantity>89</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Carl Zeiss Meditec AG</name>\n\t\t\t\t<price>123.75</price>\n\t\t\t\t<quantity>11</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Qiagen N.V.</name>\n\t\t\t\t<price>46.65</price>\n\t\t\t\t<quantity>31</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>EVOTEC SE</name>\n\t\t\t\t<price>16.11</price>\n\t\t\t\t<quantity>71</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Bechtle AG</name>\n\t\t\t\t<price>35.30</price>\n\t\t\t\t<quantity>61</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>freenet AG</name>\n\t\t\t\t<price>21.88</price>\n\t\t\t\t<quantity>67</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Telefónica Deutschland Holding AG</name>\n\t\t\t\t<price>2.51</price>\n\t\t\t\t<quantity>151</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Varta AG</name>\n\t\t\t\t<price>2.66</price>\n\t\t\t\t<quantity>173</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Vantage Towers AG</name>\n\t\t\t\t<price>32.16</price>\n\t\t\t\t<quantity>47</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>United Internet AG</name>\n\t\t\t\t<price>20.48</price>\n\t\t\t\t<quantity>43</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>HENSOLDT AG</name>\n\t\t\t\t<price>23.75</price>\n\t\t\t\t<quantity>41</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>SMA Solar Technology AG</name>\n\t\t\t\t<price>67.35</price>\n\t\t\t\t<quantity>23</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Nemetschek SE</name>\n\t\t\t\t<price>51.00</price>\n\t\t\t\t<quantity>19</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Siltronic AG</name>\n\t\t\t\t<price>73.70</price>\n\t\t\t\t<quantity>17</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Jenoptik AG</name>\n\t\t\t\t<price>27.4</price>\n\t\t\t\t<quantity>47</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>CANCOM SE</name>\n\t\t\t\t<price>30.80</price>\n\t\t\t\t<quantity>59</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>MorphoSys AG</name>\n\t\t\t\t<price>14.08</price>\n\t\t\t\t<quantity>107</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Nagarro SE</name>\n\t\t\t\t<price>119.2</price>\n\t\t\t\t<quantity>7</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>CompuGroup Medical SE &amp; Co. KGaA</name>\n\t\t\t\t<price>38.40</price>\n\t\t\t\t<quantity>47</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>SUSE S.A.</name>\n\t\t\t\t<price>17.32</price>\n\t\t\t\t<quantity>43</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Software AG</name>\n\t\t\t\t<price>25.5</price>\n\t\t\t\t<quantity>19</quantity>\n\t\t\t</position>\n\t\t</portfolio>\n\t</message>\n</taskcontrol>",
 							"description": "(Required) The name of the data source with prefix, e.g. xml:DATA or embeddedObject:images/example.jpg It is allowed to pass several objects in one request (that means having several file parameters in the multipart form). The Unicode name for embedded objects should be normalized using Normalization Form C (NFC), see java.text.Normalizer.\n",
 							"type": "text"
 						}
@@ -1511,7 +1515,8 @@
 						"exec": [
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -1523,7 +1528,7 @@
 					"formdata": [
 						{
 							"key": "xml:{{datasource}}",
-							"value": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<!-- D e p o t ü b e r s i c h t -->\n<depot>\n\t<!-- K u n d e (Anschrift) -->\n\t<Vermerkzone>\n\t\t<zusatz1>Einschreiben</zusatz1>\n\t\t<zusatz2>Persönlich</zusatz2>\n\t</Vermerkzone>\n\t<kunde>\n\t\t<anrede>Herr</anrede>\n\t\t<vorname>Raphael</vorname>\n\t\t<name>Lucan</name>\n\t\t<strasse>Leipziger Str. 17</strasse>\n\t\t<plz>48163</plz>\n\t\t<ort>Münster</ort>\n\t\t<land />\n\t</kunde>\n\t<!-- A L L G E M E I N E V E R S I C H E R U N G S D A T E N K U N D E -->\n\t<versicherungsdaten>\n\t\t<versicherungsnummer>123-465-C8</versicherungsnummer>\n\t\t<versicherungsart>Kfz-Versicherung</versicherungsart>\n\t</versicherungsdaten>\n\t<!-- S a c h b e a r b e i t e r -->\n\t<sachbearbeiter>\n\t\t<anrede>Herr</anrede>\n\t\t<name>Erich Hofmeier</name>\n\t\t<abteilung>Kundenservice</abteilung>\n\t\t<telefon>07766 (99 66 44)</telefon>\n\t\t<telefax>07766 (99 66 66)</telefax>\n\t\t<email>erich.hofmeier@web.de</email>\n\t\t<kuerzel>erho</kuerzel>\n\t</sachbearbeiter>\n\t<!-- V E R S I C H E R U N G S D A T E N L E B E N S V E R S I C H E R U \n\t\tN G -->\n\t<versicherungsdatenLV>\n\t\t<reserven>680.30</reserven>\n\t\t<rückkaufwert>10,077.30</rückkaufwert>\n\t\t<überschuss>1,221.21</überschuss>\n\t\t<VersPerson>Raphael Lucan</VersPerson>\n\t\t<WertDatum>01.11.2018</WertDatum>\n\t</versicherungsdatenLV>\n\t<!-- D e p o t -->\n\t<aktien>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>LUFTHANSA AG VNA O.N</name>\n\t\t\t<kurs>12.87</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DEUTSCHE BANK AG NA O.N.</name>\n\t\t\t<kurs>57.79</kurs>\n\t\t\t<anzahl>25</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>ALLIANZ SE VNA O.N.</name>\n\t\t\t<kurs>93.38</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>SAP AG O.N.</name>\n\t\t\t<kurs>35.86</kurs>\n\t\t\t<anzahl>30</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DRESDNER BANK AG NA O.N.</name>\n\t\t\t<kurs>51.50</kurs>\n\t\t\t<anzahl>15</anzahl>\n\t\t</Aktie>\n\t\t<Aktie>\n\t\t\t<name>DAIMLER AG NA O.N.</name>\n\t\t\t<kurs>36.12</kurs>\n\t\t\t<anzahl>20</anzahl>\n\t\t</Aktie>\n\t</aktien>\n</depot>",
+							"value": "<taskcontrol>\n\t<message>\n\t\t<letterdate>29.12.2024</letterdate>\n\t\t<instance>\n\t\t\t<sender>\n\t\t\t\t<Name>Company Unlimited</Name>\n\t\t\t\t<Street>Kruppallee 42</Street>\n\t\t\t\t<zip>13373</zip>\n\t\t\t\t<city>Essen</city>\n\t\t\t\t<user>\n\t\t\t\t\t<partnerid>14213373</partnerid>\n\t\t\t\t\t<userid>EH</userid>\n\t\t\t\t\t<salutation>Mr.</salutation>\n\t\t\t\t\t<title></title>\n\t\t\t\t\t<firstname>Erich</firstname>\n\t\t\t\t\t<lastname>Hofmeier</lastname>\n\t\t\t\t\t<companyname1>Company Unlimited</companyname1>\n\t\t\t\t\t<companyname2></companyname2>\n\t\t\t\t\t<houseno>42</houseno>\n\t\t\t\t\t<addresssupplement></addresssupplement>\n\t\t\t\t\t<Street>Kruppallee</Street>\n\t\t\t\t\t<zip>13373</zip>\n\t\t\t\t\t<city>Essen</city>\n\t\t\t\t\t<country></country>\n\t\t\t\t\t<address>\n\t\t\t\t\t\t<line>Company Unlimited</line>\n\t\t\t\t\t\t<line>Erich Hofmeier</line>\n\t\t\t\t\t\t<line>Kruppallee 42</line>\n\t\t\t\t\t\t<line>13373 Essen</line>\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t</address>\n\t\t\t\t\t<salutatoryaddress>Hello Mr. Brackhaus,</salutatoryaddress>\n\t\t\t\t\t<role>rückwärts</role>\n\t\t\t\t\t<email>erich.hofmeier@company.de</email>\n\t\t\t\t\t<phone>0815-47111337</phone>\n\t\t\t\t\t<fax>0815-47114242</fax>\n\t\t\t\t</user>\n\t\t\t</sender>\n\t\t\t<recipient>\n\t\t\t\t<Partner>\n\t\t\t\t\t<partnerid>20698101</partnerid>\n\t\t\t\t\t<userid></userid>\n\t\t\t\t\t<salutation>Mrs.</salutation>\n\t\t\t\t\t<title>Dr.</title>\n\t\t\t\t\t<firstname>Maria</firstname>\n\t\t\t\t\t<lastname>Mercurial</lastname>\n\t\t\t\t\t<companyname1></companyname1>\n\t\t\t\t\t<companyname2></companyname2>\n\t\t\t\t\t<houseno></houseno>\n\t\t\t\t\t<addresssupplement>Postfach 456</addresssupplement>\n\t\t\t\t\t<Street></Street>\n\t\t\t\t\t<zip>98199</zip>\n\t\t\t\t\t<city>Smaragdstadt</city>\n\t\t\t\t\t<country></country>\n\t\t\t\t\t<address>\n\t\t\t\t\t\t<line>Dr. Maria Mercurial</line>\n\t\t\t\t\t\t<line>Postfach 456</line>\n\t\t\t\t\t\t<line>98199 Smaragdstadt</line>\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t\t<!-- <line></line> -->\n\t\t\t\t\t</address>\n\t\t\t\t\t<!-- <salutatoryaddress>Hello Mrs. Mercurial,</salutatoryaddress> -->\n\t\t\t\t\t<role>vorwärts</role>\n\t\t\t\t\t<email>m.mercurial@fasa.sr</email>\n\t\t\t\t\t<phone>01989-2050</phone>\n\t\t\t\t\t<fax>01989-2001</fax>\n\t\t\t\t</Partner>\n\t\t\t\t<!-- <salutatoryaddress>Hello Mrs. Mercurial,</salutatoryaddress> -->\n\t\t\t\t<!-- <Namefirstname>Maria Mercurial</Namefirstname> -->\n\t\t\t</recipient>\n\t\t\t<outputcontrol>\n\t\t\t\t<outputchannel>CENTRALPRINTING</outputchannel>\n\t\t\t\t<CENTRALPRINTING>\n\t\t\t\t\t<Batch></Batch>\n\t\t\t\t\t<zip>98199</zip>\n\t\t\t\t\t<LKZ>DE</LKZ>\n\t\t\t\t</CENTRALPRINTING>\n\t\t\t</outputcontrol>\n\t\t\t<outputcontrol>\n\t\t\t\t<outputchannel>ARCHIVE</outputchannel>\n\t\t\t</outputcontrol>\n\t\t</instance>\n\t\t<portfolio>\n\t\t\t<position>\n\t\t\t\t<name>Gamestop Corporation</name>\n\t\t\t\t<price>15.47</price>\n\t\t\t\t<quantity>1337</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>SAP SE</name>\n\t\t\t\t<price>103.22</price>\n\t\t\t\t<quantity>23</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Infineon Technologies AG</name>\n\t\t\t\t<price>30.72</price>\n\t\t\t\t<quantity>17</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Deutsche Telekom AG</name>\n\t\t\t\t<price>19.75</price>\n\t\t\t\t<quantity>37</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Sartorius AG Vz</name>\n\t\t\t\t<price>373.70</price>\n\t\t\t\t<quantity>11</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Nordex SE</name>\n\t\t\t\t<price>14.11</price>\n\t\t\t\t<quantity>73</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Siemens Healthineers AG</name>\n\t\t\t\t<price>47.69</price>\n\t\t\t\t<quantity>31</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>AIXTRON SE</name>\n\t\t\t\t<price>28.60</price>\n\t\t\t\t<quantity>19</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>VERBIO Vereinigte BioEnergie AG</name>\n\t\t\t\t<price>60.25</price>\n\t\t\t\t<quantity>29</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>TeamViewer AG</name>\n\t\t\t\t<price>12.87</price>\n\t\t\t\t<quantity>89</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Carl Zeiss Meditec AG</name>\n\t\t\t\t<price>123.75</price>\n\t\t\t\t<quantity>11</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Qiagen N.V.</name>\n\t\t\t\t<price>46.65</price>\n\t\t\t\t<quantity>31</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>EVOTEC SE</name>\n\t\t\t\t<price>16.11</price>\n\t\t\t\t<quantity>71</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Bechtle AG</name>\n\t\t\t\t<price>35.30</price>\n\t\t\t\t<quantity>61</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>freenet AG</name>\n\t\t\t\t<price>21.88</price>\n\t\t\t\t<quantity>67</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Telefónica Deutschland Holding AG</name>\n\t\t\t\t<price>2.51</price>\n\t\t\t\t<quantity>151</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Varta AG</name>\n\t\t\t\t<price>2.66</price>\n\t\t\t\t<quantity>173</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Vantage Towers AG</name>\n\t\t\t\t<price>32.16</price>\n\t\t\t\t<quantity>47</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>United Internet AG</name>\n\t\t\t\t<price>20.48</price>\n\t\t\t\t<quantity>43</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>HENSOLDT AG</name>\n\t\t\t\t<price>23.75</price>\n\t\t\t\t<quantity>41</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>SMA Solar Technology AG</name>\n\t\t\t\t<price>67.35</price>\n\t\t\t\t<quantity>23</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Nemetschek SE</name>\n\t\t\t\t<price>51.00</price>\n\t\t\t\t<quantity>19</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Siltronic AG</name>\n\t\t\t\t<price>73.70</price>\n\t\t\t\t<quantity>17</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Jenoptik AG</name>\n\t\t\t\t<price>27.4</price>\n\t\t\t\t<quantity>47</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>CANCOM SE</name>\n\t\t\t\t<price>30.80</price>\n\t\t\t\t<quantity>59</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>MorphoSys AG</name>\n\t\t\t\t<price>14.08</price>\n\t\t\t\t<quantity>107</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Nagarro SE</name>\n\t\t\t\t<price>119.2</price>\n\t\t\t\t<quantity>7</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>CompuGroup Medical SE &amp; Co. KGaA</name>\n\t\t\t\t<price>38.40</price>\n\t\t\t\t<quantity>47</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>SUSE S.A.</name>\n\t\t\t\t<price>17.32</price>\n\t\t\t\t<quantity>43</quantity>\n\t\t\t</position>\n\t\t\t<position>\n\t\t\t\t<name>Software AG</name>\n\t\t\t\t<price>25.5</price>\n\t\t\t\t<quantity>19</quantity>\n\t\t\t</position>\n\t\t</portfolio>\n\t</message>\n</taskcontrol>",
 							"type": "text"
 						}
 					]
@@ -2145,7 +2150,7 @@
 		},
 		{
 			"key": "version",
-			"value": "6.13",
+			"value": "6.15",
 			"type": "string"
 		},
 		{
@@ -2160,12 +2165,12 @@
 		},
 		{
 			"key": "template",
-			"value": "\\library\\bsp_Anschreiben\\Vorlagen\\{{templateSearchName}}.template",
+			"value": "\\library\\{{templateProjectName}}\\Templates\\{{templateSearchName}}.template",
 			"type": "string"
 		},
 		{
 			"key": "template-name",
-			"value": "/library/bsp_Anschreiben/Vorlagen/{{templateSearchName}}.template",
+			"value": "/library/{{templateProjectName}}/Templates/{{templateSearchName}}.template",
 			"type": "string"
 		},
 		{
@@ -2199,17 +2204,22 @@
 		},
 		{
 			"key": "documentNamePrefix",
-			"value": "WillkommenDocument",
+			"value": "PortfolioOverviewDocument",
 			"type": "string"
 		},
 		{
 			"key": "templateSearchName",
-			"value": "Willkommen",
+			"value": "PortfolioOverview",
 			"type": "string"
 		},
 		{
 			"key": "inputid",
 			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "templateProjectName",
+			"value": "Demo_FinancialServices",
 			"type": "string"
 		}
 	]
