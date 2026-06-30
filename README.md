@@ -15,7 +15,8 @@ If you have german version of starter framework adjust project and template name
 use the english version of the starter framework.
 If you are using version 6.15 or 6.16 of Serie M/ adjust version number in version check at very beginning.
 
-![grafik](https://github.com/user-attachments/assets/baad988e-ee87-4979-9566-075787bc5e10)
+![variables to configure](https://github.com/user-attachments/assets/386c25d4-eb5d-41b4-955b-1c175d3a8115)
+
 
 ## Requests in detail
 
