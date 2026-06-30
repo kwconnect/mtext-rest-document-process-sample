@@ -4,16 +4,16 @@ A postman collection demonstrating the usage of some M/TEXT and M/OMS rest api m
 
 ## Preparation
 
-To test this postman collection install M/TEXT version 6.15 on your computer. If you have access to a M/TEXT system
+To test this postman collection install M/TEXT version 6.26 on your computer. If you have access to a M/TEXT system
 activate the sample projects from M/Workbench on the server.
-The sample projects have changed in 6.15 version. Please check to use sample projects from 6.15 M/Workbench.
+The sample projects have changed in 6.26 version. Please check to use sample projects from 6.26 M/Workbench.
 
 Import the collection to your postman workspace. Open the collection and go to variables tab and change the marked variables 
 with your values. 
 Please omit the trailing slash of baseHost parameter. The password is clear text. 
 If you have german version of starter framework adjust project and template name to german names. This demo is prepared to
 use the english version of the starter framework.
-If you are using version 6.14 of Serie M/ adjust version number in version check at very beginning.
+If you are using version 6.15 or 6.16 of Serie M/ adjust version number in version check at very beginning.
 
 ![grafik](https://user-images.githubusercontent.com/30256627/161446982-5ee43afa-a32e-4b9f-837e-a9eafc0f03f7.png)
 
